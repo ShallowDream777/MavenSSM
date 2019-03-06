@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+	<!-- 读取database.properties -->
+	<context:property-placeholder location="classpath:database.properties" />
+
+
+	<!-- 配置DataSource -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="url" value="${url}" />
+		<property name="driverClassName" value="${driver}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
+	</bean>
+
+	<!-- 配置SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+	</bean>
+
+	
+	<!-- 配置Dao -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+		<property name="basePackage" value="dao.*" />
+	</bean >
+	
+	<!-- 配置扫描注解 -->
+    <!-- <context:component-scan base-package="com.xingyisys.service" /> -->
+    <context:component-scan base-package="*"/>
+    
+    <!-- 启动对@AspectJ注解的支持 -->  
+    <aop:aspectj-autoproxy/> 
+	<!-- 配置扫描注解 -->
+   <!-- 扫描切点类组件 -->
+	<bean id="taskExecutor"   class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">  
+    <property name="corePoolSize" value="5" />  
+    <property name="maxPoolSize" value="10" />  
+    <property name="waitForTasksToCompleteOnShutdown" value="true" />  
+</bean>
+
+ <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- 配置基于注解的声明式事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+
+
+
+	<!-- 定义事务管理 -->
+	<!-- <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<aop:aspectj-autoproxy/>
+      <aop:config proxy-target-class="true">
+      	<aop:pointcut expression="execution(* *cn.appsys.service..*.*(..))" id="transService"/>
+      	<aop:advisor advice-ref="myAdvice" pointcut-ref="transService"/>
+      </aop:config>
+      
+ 	<tx:advice id="myAdvice" transaction-manager="txManager">  
+    	<tx:attributes>  
+	        <tx:method name="appsys*"  propagation="REQUIRED" rollback-for="Exception"  />
+	        <tx:method name="*" />
+    	</tx:attributes>  
+ 	</tx:advice> -->
+	 <!-- 添加事务注解驱动 -->
+	<!-- <tx:annotation-driven transaction-manager="txManager"/> -->
+	<!-- 声明式事务 -->
+</beans>

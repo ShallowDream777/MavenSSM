@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserMapper">
+  <resultMap id="BaseResultMap" type="pojo.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="pojo.User">
+    insert into user (id, name)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.User">
+    update user
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.User">
+    update user
+    set name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="pojo.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_loginname" jdbcType="VARCHAR" property="userLoginname" />
+    <result column="user_nickname" jdbcType="VARCHAR" property="userNickname" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salf_password" jdbcType="VARCHAR" property="salfPassword" />
+    <result column="autograph" jdbcType="VARCHAR" property="autograph" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="user_status" jdbcType="VARCHAR" property="userStatus" />
+    <result column="creation_by" jdbcType="VARCHAR" property="creationBy" />
+    <result column="modify_by" jdbcType="VARCHAR" property="modifyBy" />
+    <result column="creation_time" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="modifcation_time" jdbcType="TIMESTAMP" property="modifcationTime" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="exit_time" jdbcType="TIMESTAMP" property="exitTime" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pojo.User">
+    <result column="relative_path" jdbcType="LONGVARCHAR" property="relativePath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_loginname, user_nickname, password, salf_password, autograph, gender, phone, 
+    telephone, fax, email, company_id, department_id, user_status, creation_by, modify_by, 
+    creation_time, modifcation_time, position, login_time, exit_time, role_id
+  </sql>
+  <sql id="Blob_Column_List">
+    relative_path
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="pojo.User">
+    insert into user (id, user_loginname, user_nickname, 
+      password, salf_password, autograph, 
+      gender, phone, telephone, 
+      fax, email, company_id, 
+      department_id, user_status, creation_by, 
+      modify_by, creation_time, modifcation_time, 
+      position, login_time, exit_time, 
+      role_id, relative_path)
+    values (#{id,jdbcType=VARCHAR}, #{userLoginname,jdbcType=VARCHAR}, #{userNickname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{salfPassword,jdbcType=VARCHAR}, #{autograph,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=CHAR}, #{phone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{fax,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=VARCHAR}, #{userStatus,jdbcType=VARCHAR}, #{creationBy,jdbcType=VARCHAR}, 
+      #{modifyBy,jdbcType=VARCHAR}, #{creationTime,jdbcType=TIMESTAMP}, #{modifcationTime,jdbcType=TIMESTAMP}, 
+      #{position,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{exitTime,jdbcType=TIMESTAMP}, 
+      #{roleId,jdbcType=VARCHAR}, #{relativePath,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userLoginname != null">
+        user_loginname,
+      </if>
+      <if test="userNickname != null">
+        user_nickname,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="salfPassword != null">
+        salf_password,
+      </if>
+      <if test="autograph != null">
+        autograph,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="creationBy != null">
+        creation_by,
+      </if>
+      <if test="modifyBy != null">
+        modify_by,
+      </if>
+      <if test="creationTime != null">
+        creation_time,
+      </if>
+      <if test="modifcationTime != null">
+        modifcation_time,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="exitTime != null">
+        exit_time,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="relativePath != null">
+        relative_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userLoginname != null">
+        #{userLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickname != null">
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salfPassword != null">
+        #{salfPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="autograph != null">
+        #{autograph,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="creationBy != null">
+        #{creationBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyBy != null">
+        #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifcationTime != null">
+        #{modifcationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exitTime != null">
+        #{exitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="relativePath != null">
+        #{relativePath,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.User">
+    update user
+    <set>
+      <if test="userLoginname != null">
+        user_loginname = #{userLoginname,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickname != null">
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salfPassword != null">
+        salf_password = #{salfPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="autograph != null">
+        autograph = #{autograph,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="creationBy != null">
+        creation_by = #{creationBy,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyBy != null">
+        modify_by = #{modifyBy,jdbcType=VARCHAR},
+      </if>
+      <if test="creationTime != null">
+        creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifcationTime != null">
+        modifcation_time = #{modifcationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exitTime != null">
+        exit_time = #{exitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="relativePath != null">
+        relative_path = #{relativePath,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pojo.User">
+    update user
+    set user_loginname = #{userLoginname,jdbcType=VARCHAR},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salf_password = #{salfPassword,jdbcType=VARCHAR},
+      autograph = #{autograph,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR},
+      creation_by = #{creationBy,jdbcType=VARCHAR},
+      modify_by = #{modifyBy,jdbcType=VARCHAR},
+      creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      modifcation_time = #{modifcationTime,jdbcType=TIMESTAMP},
+      position = #{position,jdbcType=VARCHAR},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      exit_time = #{exitTime,jdbcType=TIMESTAMP},
+      role_id = #{roleId,jdbcType=VARCHAR},
+      relative_path = #{relativePath,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.User">
+    update user
+    set user_loginname = #{userLoginname,jdbcType=VARCHAR},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salf_password = #{salfPassword,jdbcType=VARCHAR},
+      autograph = #{autograph,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=VARCHAR},
+      creation_by = #{creationBy,jdbcType=VARCHAR},
+      modify_by = #{modifyBy,jdbcType=VARCHAR},
+      creation_time = #{creationTime,jdbcType=TIMESTAMP},
+      modifcation_time = #{modifcationTime,jdbcType=TIMESTAMP},
+      position = #{position,jdbcType=VARCHAR},
+      login_time = #{loginTime,jdbcType=TIMESTAMP},
+      exit_time = #{exitTime,jdbcType=TIMESTAMP},
+      role_id = #{roleId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
